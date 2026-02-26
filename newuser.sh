@@ -1,15 +1,8 @@
 #!/bin/bash
 set -e
 read -p "New user name: " username
-read -s -p "New user password: " password
-echo
-read -s -p "New user password (again): " password2
-echo
-if [ "$password" != "$password2" ]; then
-	echo "Different..."
-	exit 1
-fi
-useradd -m -p "$password" "$username"
+useradd -m "$username"
+passwd "$username"
 usermod -aG sudo "$username"
 su - "$username" -c "whoami"
 read -p "Add public SSH key (paste): " sshkey
